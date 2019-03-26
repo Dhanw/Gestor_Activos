@@ -77,7 +77,7 @@ public class Dao {
 // Usuario ------------------------------------------------------------------------------
     public Usuario getUsuario(String cuenta, String pass) throws SQLException {
 
-        String sql = "select * from usuarios where cuenta= '%s' AND password = '%s'";
+        String sql = "select * from Usuarios where cuenta= '%s' AND password = '%s'";
         sql = String.format(sql, cuenta, pass);
         ResultSet rs = db.executeQuery(sql);
         Usuario user = this.getUsuarioH(rs);
