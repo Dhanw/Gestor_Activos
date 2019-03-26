@@ -72,16 +72,12 @@ public class Controller_Login extends HttpServlet {
 
         Usuario user_tmp = new Usuario();
         updateModel(user_tmp, request);
-
         // Busca el usuario en la DB, si no lo encuentra se regresa al login
         try{
         Usuario actual = dao.getUsuario(request.getParameter("cuenta"), request.getParameter("password"));
-
 //        actual = new Usuario(1, "admin_info", "aaa", 1, new Funcionario(1, "403013010", "Oscar Campos"));
-
         if (actual == null) {
             request.getRequestDispatcher("/UserLogin/Login_View.jsp").forward(request, response);
-
         } else {
             request.setAttribute("usuario", actual);
             seleccionador(request, response, actual.getRol());
