@@ -12,10 +12,10 @@ package Activos.Logic;
 public class Bien {
 
     int ID;
-    String descripciones;
+    String descripcion;
     String marca;
     String modelo;
-    double precio_cu;
+    double precio;
     int cantidad;
     Solicitud solicitud;
 
@@ -23,12 +23,23 @@ public class Bien {
     }
 
     public Bien(String descripciones, String marca, String modelo, double precio_cu, int cantidad) {
-        this.descripciones = descripciones;
+        this.descripcion = descripciones;
         this.marca = marca;
         this.modelo = modelo;
-        this.precio_cu = precio_cu;
+        this.precio = precio_cu;
         this.cantidad = cantidad;
     }
+
+    public Bien(int ID, String descripcion, String marca, String modelo, double precio, int cantidad, Solicitud solicitud) {
+        this.ID = ID;
+        this.descripcion = descripcion;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.precio = precio;
+        this.cantidad = cantidad;
+        this.solicitud = solicitud;
+    }
+    
 
     public int getID() {
         return ID;
@@ -39,11 +50,11 @@ public class Bien {
     }
 
     public String getDescripciones() {
-        return descripciones;
+        return descripcion;
     }
 
-    public void setDescripciones(String descripciones) {
-        this.descripciones = descripciones;
+    public void setDescripciones(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public String getMarca() {
@@ -62,12 +73,12 @@ public class Bien {
         this.modelo = modelo;
     }
 
-    public double getPrecio_cu() {
-        return precio_cu;
+    public double getPrecio() {
+        return precio;
     }
 
-    public void setPrecio_cu(double precio_cu) {
-        this.precio_cu = precio_cu;
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
     public int getCantidad() {

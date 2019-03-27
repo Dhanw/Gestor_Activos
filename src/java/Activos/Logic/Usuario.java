@@ -44,7 +44,8 @@ public class Usuario {
         this.password = password;
         this.rol = rol;
     }
-
+    
+    
     public Usuario(String cuenta, String password, int rol, Funcionario funcionario) {
         this.cuenta = cuenta;
         this.password = password;

@@ -28,41 +28,42 @@ public class Solicitud {
     public static final int PROCESADA = 5;
 
     int ID;
-    String codigo_comprobante;
-    Date fecha_adquision;
-    int tipo_adquisicion;
+    String comprobante;
+    Date fecha;
+    int tipo;
     int estado;
     Usuario registrador;
-
-    //Atributos que no estan en la BD
-    List<Bien> bienes;
+    Dependencia dependencia;
+    int cantidad;
     double total;
-
+    List<Bien> bienes;
     public Solicitud() {
 
     }
 
-    public Solicitud(String codigo_comprobante, Date fecha_adquision, int tipo_adquisicion, int estado, Usuario registrador, List<Bien> bienes, double total) {
-        this.codigo_comprobante = codigo_comprobante;
-        this.fecha_adquision = fecha_adquision;
-        this.tipo_adquisicion = tipo_adquisicion;
+    public Solicitud(String comprobante, Date fecha, int tipo, int estado, Usuario registrador, Dependencia dependencia, int cantidad, double total, List<Bien> bienes) {
+        this.comprobante = comprobante;
+        this.fecha = fecha;
+        this.tipo = tipo;
         this.estado = estado;
         this.registrador = registrador;
-        this.bienes = bienes;
+        this.dependencia = dependencia;
+        this.cantidad = cantidad;
         this.total = total;
-
-        for (Bien _bien : this.bienes) {
-            _bien.setSolicitud(this);
-            this.total += _bien.getPrecio_cu();
-        }
+        this.bienes = bienes;
     }
 
-    public Solicitud(String codigo_comprobante, Date fecha_adquision, int tipo_adquisicion, int estado, Usuario registrador) {
-        this.codigo_comprobante = codigo_comprobante;
-        this.fecha_adquision = fecha_adquision;
-        this.tipo_adquisicion = tipo_adquisicion;
-        this.estado = estado;
+    public Solicitud(String comprobante, Date fecha, int tipo, Usuario registrador, Dependencia dependencia, List<Bien> bienes) {
+        this.comprobante = comprobante;
+        this.fecha = fecha;
+        this.tipo = tipo;
         this.registrador = registrador;
+        this.dependencia = dependencia;
+        this.bienes = bienes;
+        this.cantidad = bienes.size();
+        for(Bien b: bienes){
+            total = total + b.getPrecio();
+        }
     }
 
     public int getID() {
@@ -73,28 +74,28 @@ public class Solicitud {
         this.ID = ID;
     }
 
-    public String getCodigo_comprobante() {
-        return codigo_comprobante;
+    public String getComprobante() {
+        return comprobante;
     }
 
-    public void setCodigo_comprobante(String codigo_comprobante) {
-        this.codigo_comprobante = codigo_comprobante;
+    public void setComprobante(String comprobante) {
+        this.comprobante = comprobante;
     }
 
-    public Date getFecha_adquision() {
-        return fecha_adquision;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setFecha_adquision(Date fecha_adquision) {
-        this.fecha_adquision = fecha_adquision;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
-    public int getTipo_adquisicion() {
-        return tipo_adquisicion;
+    public int getTipo() {
+        return tipo;
     }
 
-    public void setTipo_adquisicion(int tipo_adquisicion) {
-        this.tipo_adquisicion = tipo_adquisicion;
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
     }
 
     public int getEstado() {
@@ -113,16 +114,20 @@ public class Solicitud {
         this.registrador = registrador;
     }
 
-    public List<Bien> getBienes() {
-        return bienes;
+    public Dependencia getDependencia() {
+        return dependencia;
     }
 
-    public void setBienes(List<Bien> bienes) {
-        this.bienes = bienes;
-        for (Bien _bien : this.bienes) {
-            _bien.setSolicitud(this);
-            this.total += _bien.getPrecio_cu();
-        }
+    public void setDependencia(Dependencia dependencia) {
+        this.dependencia = dependencia;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
     public double getTotal() {
@@ -133,4 +138,23 @@ public class Solicitud {
         this.total = total;
     }
 
+    public List<Bien> getBienes() {
+        return bienes;
+    }
+
+    public void setBienes(List<Bien> bienes) {
+        this.bienes = bienes;
+        this.bienes = bienes;
+        this.cantidad = bienes.size();
+        for(Bien b: bienes){
+            total = total + b.getPrecio();
+        }
+    }
+    
+    
+
+    
+    
+
+   
 }
