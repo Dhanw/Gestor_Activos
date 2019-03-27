@@ -88,7 +88,7 @@ public class Controller_Login extends HttpServlet {
     private void seleccionador(HttpServletRequest request, HttpServletResponse response, int tipo) throws ServletException, IOException {
         switch (tipo) {
             case ADMINISTRADOR_DEPENDENCIA:
-                request.getRequestDispatcher("/Solicitud/Solicitud_Listado.jsp").forward(request, response);
+                request.getRequestDispatcher("/Solicitud/Solicitud_listar").forward(request, response);
                 break;
         }
     }

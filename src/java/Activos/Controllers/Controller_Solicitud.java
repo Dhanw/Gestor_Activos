@@ -8,6 +8,7 @@ package Activos.Controllers;
 import Activos.Logic.Solicitud;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jorac
  */
-@WebServlet(name = "Controller_Solicitud", urlPatterns = {"/Solicitud_crear, /Solicitud_mostrar, /Solicitud_eliminar, /Solicitud_editar"})
+@WebServlet(name = "Controller_Solicitud", urlPatterns = {"/Solicitud/Solicitud_listar", "/Solicitud/Solicitud_crear", "/Solicitud/Solicitud_mostrar", "/Solicitud/Solicitud_eliminar", "/Solicitud/Solicitud_editar"})
 public class Controller_Solicitud extends HttpServlet {
 
     /**
@@ -32,14 +33,15 @@ public class Controller_Solicitud extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             switch(request.getServletPath()){
-                case "/Solicitud_crear" : this.crearSolicitud(request, response);
-                case "/Solicitud_mostrar": this.mostrarSolicitud(request, response);
-                case "/Solicitud_editar": this.editarSolicitud(request, response);
-                case "/Solicitud_eliminar": this.eliminarSolicitud(request, response);
+                case "/Solicitud/Solicitud_listar": this.listarSolicitudes(request, response); break;
+                case "/Solicitud/Solicitud_crear" : this.crearSolicitud(request, response); break;
+                case "/Solicitud/Solicitud_mostrar": this.mostrarSolicitud(request, response); break;
+                case "/Solicitud/Solicitud_eliminar": this.editarSolicitud(request, response); break;
+                case "/Solicitud/Solicitud_editar": this.eliminarSolicitud(request, response); break;
             }
             
         }
@@ -101,6 +103,11 @@ public class Controller_Solicitud extends HttpServlet {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    private void listarSolicitudes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            request.getRequestDispatcher("/Solicitud/Solicitud_Listado.jsp").forward(request, response);
+    }
+    
     
 
+   
 }
