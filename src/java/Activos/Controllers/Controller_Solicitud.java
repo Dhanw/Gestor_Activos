@@ -5,10 +5,14 @@
  */
 package Activos.Controllers;
 
+import Activos.Logic.Model;
 import Activos.Logic.Solicitud;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,18 +36,28 @@ public class Controller_Solicitud extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
+            throws ServletException, IOException, Exception {
+
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            switch(request.getServletPath()){
-                case "/Solicitud/Solicitud_listar": this.listarSolicitudes(request, response); break;
-                case "/Solicitud/Solicitud_crear" : this.crearSolicitud(request, response); break;
-                case "/Solicitud/Solicitud_mostrar": this.mostrarSolicitud(request, response); break;
-                case "/Solicitud/Solicitud_eliminar": this.editarSolicitud(request, response); break;
-                case "/Solicitud/Solicitud_editar": this.eliminarSolicitud(request, response); break;
+            switch (request.getServletPath()) {
+                case "/Solicitud/Solicitud_listar":
+                    this.listarSolicitudes(request, response);
+                    break;
+                case "/Solicitud/Solicitud_crear":
+                    this.crearSolicitud(request, response);
+                    break;
+                case "/Solicitud/Solicitud_mostrar":
+                    this.mostrarSolicitud(request, response);
+                    break;
+                case "/Solicitud/Solicitud_eliminar":
+                    this.eliminarSolicitud(request, response);
+                    break;
+                case "/Solicitud/Solicitud_editar":
+                    this.editarSolicitud(request, response);
+                    break;
             }
-            
+
         }
     }
 
@@ -59,7 +73,13 @@ public class Controller_Solicitud extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(Controller_Solicitud.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**
@@ -73,7 +93,11 @@ public class Controller_Solicitud extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(Controller_Solicitud.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -85,29 +109,33 @@ public class Controller_Solicitud extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
+
     private void crearSolicitud(HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void mostrarSolicitud(HttpServletRequest request, HttpServletResponse response) {
-        Solicitud solicitud= new Solicitud();
-        
+        Solicitud solicitud = new Solicitud();
+
     }
 
     private void editarSolicitud(HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void eliminarSolicitud(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void eliminarSolicitud(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        int id_solicitud = Integer.parseInt(request.getParameter("ID"));
+        try {
+            Model.instance().eliminarSolicitud(id_solicitud);
+            request.setAttribute("mensaje", "correcto");
+        } catch (SQLException error) {
+            request.setAttribute("mensaje", error.getMessage());
+        }
+         request.getRequestDispatcher("/Solicitud/Solicitud_listar").forward(request, response);
     }
 
     private void listarSolicitudes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            request.getRequestDispatcher("/Solicitud/Solicitud_Listado.jsp").forward(request, response);
+        request.getRequestDispatcher("/Solicitud/Solicitud_Listado.jsp").forward(request, response);
     }
-    
-    
 
-   
 }

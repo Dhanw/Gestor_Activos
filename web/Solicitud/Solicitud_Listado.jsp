@@ -21,6 +21,7 @@
             <center>
                 <%
                     Usuario use =(Usuario)session.getAttribute("user");
+                    
                     Dependencia dep= Model.instance().getDependencia_fromFuncionario(use.getFuncionario().getID());
                     if(dep!=null) {
                 
@@ -46,6 +47,7 @@
                         <th>Fecha</th>
                         <th>Tipo</th>
                         <th>Estado</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,6 +60,7 @@
                         <td><%=sol.getFecha() %></td>
                         <td><%=sol.getTipo() %></td>
                         <td><%=sol.getEstado() %></td>
+                        <td><a href="Solicitud/Solicitud_eliminar?ID=<%=sol.getID()%>">Eliminar</a></td>
                     </tr>
                  <%}   %>
                 </tbody>

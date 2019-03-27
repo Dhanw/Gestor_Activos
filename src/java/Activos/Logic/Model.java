@@ -8,6 +8,8 @@ package Activos.Logic;
 import Activos.Data.Dao;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -49,6 +51,7 @@ public class Model {
     public Dependencia getDependencia(int id) throws SQLException, Exception {
         return dao.getDependencia(id);
     }
+
     public Dependencia getDependencia_fromFuncionario(int id) throws SQLException, Exception {
         return dao.getDependencia_fromFuncionario(id);
     }
@@ -75,6 +78,10 @@ public class Model {
 
     public List<Solicitud> solicitudesPorDependencia(Dependencia depe) throws SQLException, Exception {
         return dao.getSolicitudes(depe);
+    }
+
+    public void eliminarSolicitud(int solicitud) throws SQLException {
+         dao.eliminarSolicitud(solicitud);
     }
 
 }
