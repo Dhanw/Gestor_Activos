@@ -4,7 +4,9 @@
     Author     : Jose
 --%>
 
+<%@page import="java.util.List"%>
 <%@page import="Activos.Logic.Solicitud"%>
+<%@page import="Activos.Logic.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,7 +19,14 @@
         <%@ include file="/Header.jsp" %>
         <div class="container">
             <center>
-                <h2>Solicitudes - (Departamento)</h2>
+                <%
+                    Usuario use =(Usuario)session.getAttribute("user");
+                    Dependencia dep= Model.instance().getDependencia_fromFuncionario(use.getFuncionario().getID());
+                    if(dep!=null) {
+                
+                %> 
+                <h2>Solicitudes - (<%=dep.getNombre()%>)</h2>
+                <%}%>
             </center>
             <br>
             <div class="input-group">
@@ -40,27 +49,17 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <%  List<Solicitud> solicitudes = Model.instance().solicitudesPorDependencia(dep);
+                        for(Solicitud sol:solicitudes){                 
+                    %>
                     <tr>
-                        <td><a href="#">1</a></td>
-                        <td>C001</td>
-                        <td>01/12/2019</td>
-                        <td>Compra</td>
-                        <td>Pendiente</td>
+                        <td><a href="#"></a><%=sol.getID()%>  </td>
+                        <td><%=sol.getComprobante() %></td>
+                        <td><%=sol.getFecha() %></td>
+                        <td><%=sol.getTipo() %></td>
+                        <td><%=sol.getEstado() %></td>
                     </tr>
-                    <tr>
-                        <td><a href="#">2</a></td>
-                        <td>C002</td>
-                        <td>02/12/2019</td>
-                        <td>Compra</td>
-                        <td>Aprobado</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">3</a></td>
-                        <td>C003</td>
-                        <td>03/12/2019</td>
-                        <td>Donacion</td>
-                        <td>Denegada</td>
-                    </tr>
+                 <%}   %>
                 </tbody>
             </table>
         </div>

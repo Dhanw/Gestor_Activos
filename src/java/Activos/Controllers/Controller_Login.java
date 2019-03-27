@@ -72,8 +72,8 @@ public class Controller_Login extends HttpServlet {
             if (sesion != null) {
                 request.getSession(true).setAttribute("user", sesion);
                 this.seleccionador(request, response, sesion.getRol());
-            }
-            request.getRequestDispatcher("/UserLogin/Login_View.jsp").forward(request, response);
+            }else
+             request.getRequestDispatcher("/UserLogin/PrepareLogin").forward(request, response);
         } catch (Exception ex) {
         }
     }

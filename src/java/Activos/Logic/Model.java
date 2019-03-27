@@ -30,7 +30,7 @@ public class Model {
         dao = new Dao();
     }
 
-    public Usuario getUsuario(String cuenta, String pass) throws SQLException {
+    public Usuario getUsuario(String cuenta, String pass) throws SQLException, Exception {
         return dao.getUsuario(cuenta, pass);
     }
 
@@ -38,7 +38,7 @@ public class Model {
         dao.addUsuario(usuario);
     }
 
-    public Funcionario getFuncionario(int id) throws SQLException {
+    public Funcionario getFuncionario(int id) throws SQLException, Exception {
         return dao.getFuncionario(id);
     }
 
@@ -46,15 +46,18 @@ public class Model {
         dao.addFuncionario(funcionario);
     }
 
-    public Dependencia getDependencia(int id) throws SQLException {
+    public Dependencia getDependencia(int id) throws SQLException, Exception {
         return dao.getDependencia(id);
+    }
+    public Dependencia getDependencia_fromFuncionario(int id) throws SQLException, Exception {
+        return dao.getDependencia_fromFuncionario(id);
     }
 
     public void addDependencia(Dependencia dependencia) throws Exception {
         dao.addDependencia(dependencia);
     }
 
-    public Bien getBien(int id) throws SQLException {
+    public Bien getBien(int id) throws SQLException, Exception {
         return dao.getBien(id);
     }
 
@@ -66,11 +69,11 @@ public class Model {
         dao.addBien(bien);
     }
 
-    public Solicitud getSolicitud(int id) throws SQLException {
+    public Solicitud getSolicitud(int id) throws SQLException, Exception {
         return dao.getSolicitud(id);
     }
 
-    public List<Solicitud> solicitudesPorDependencia(Dependencia depe) throws SQLException {
+    public List<Solicitud> solicitudesPorDependencia(Dependencia depe) throws SQLException, Exception {
         return dao.getSolicitudes(depe);
     }
 

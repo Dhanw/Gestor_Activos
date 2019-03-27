@@ -53,7 +53,7 @@ public class Model_Login {
         return domainModel;
     }
 
-    public Usuario Login(String cuenta, String password) throws SQLException {
+    public Usuario Login(String cuenta, String password) throws SQLException, Exception {
         return domainModel.getUsuario(cuenta, password);
     }
 }

@@ -31,42 +31,48 @@ public class Dao {
     //--------------------------HELPERS--------------------------------------
     private Funcionario getFuncionarioH(ResultSet rs) throws SQLException {
         Funcionario func = new Funcionario();
-        if (rs.next()) {
-
+        try {
             func.setID(rs.getInt("ID"));
             func.setIdentificacion(rs.getString("identificacion"));
             func.setNombre(rs.getString("nombre"));
+            return func;
+        } catch (SQLException ex) {
+            return null;
         }
-        return func;
     }
 
-    private Usuario getUsuarioH(ResultSet rs) throws SQLException {
+    private Usuario getUsuarioH(ResultSet rs) throws SQLException, Exception {
         Usuario user = new Usuario();
-        if (rs.next()) {
-
+        try {
             user.setID(rs.getInt("ID"));
             user.setCuenta(rs.getString("cuenta"));
             user.setPassword(rs.getString("password"));
             user.setRol(rs.getInt("rol"));
-            user.setFuncionario(getFuncionarioH(rs));
+            int idfunc = rs.getInt("funcionario");
+            user.setFuncionario(this.getFuncionario(idfunc));
+            return user;
+        } catch (SQLException ex) {
+            return null;
         }
-        return user;
     }
 
-    private Dependencia getDependenciaH(ResultSet rs) throws SQLException {
+    private Dependencia getDependenciaH(ResultSet rs) throws SQLException, Exception {
         Dependencia dependencia = new Dependencia();
-        if (rs.next()) {
+        try {
             dependencia.setID(rs.getInt("ID"));
             dependencia.setNombre(rs.getString("nombre"));
             dependencia.setUbicacion(rs.getString("ubicacion"));
-            dependencia.setAdministrador(getFuncionarioH(rs));
+            int setfun = rs.getInt("administrador");
+            dependencia.setAdministrador(this.getFuncionario(setfun));
+            return dependencia;
+        } catch (SQLException ex) {
+            return null;
         }
-        return dependencia;
     }
 
-    private Solicitud getSolicitudH(ResultSet rs) throws SQLException {
+    private Solicitud getSolicitudH(ResultSet rs) throws SQLException, Exception {
         Solicitud solicitud = null;
-        if (rs.next()) {
+         try {
             solicitud = new Solicitud();
             solicitud.setID(rs.getInt("ID"));
             solicitud.setComprobante(rs.getString("comprobante"));
@@ -75,14 +81,18 @@ public class Dao {
             solicitud.setCantidad(rs.getInt("cantidad"));
             solicitud.setTotal(rs.getFloat("total"));
             solicitud.setEstado(rs.getInt("estado"));
-            solicitud.setDependencia(getDependenciaH(rs));
-            solicitud.setRegistrador(getFuncionarioH(rs));
+             int setfun = rs.getInt("dependencia");
+            solicitud.setDependencia(getDependencia(setfun));
+             int setfun2 = rs.getInt("registrador");
+            solicitud.setRegistrador(this.getFuncionario(setfun2));
             solicitud.setBienes(this.getBienes(solicitud));
+            return solicitud;
+            } catch (SQLException ex) {
+            return null;
         }
-        return solicitud;
     }
 
-    private Bien getBienH(ResultSet rs) throws SQLException {
+    private Bien getBienH(ResultSet rs) throws SQLException, Exception {
         Bien bien = null;
         if (rs.next()) {
             bien = new Bien();
@@ -94,19 +104,21 @@ public class Dao {
             bien.setCantidad(rs.getInt("cantidad"));
             bien.setSolicitud(getSolicitudH(rs));
         }
-
         return bien;
     }
     // METODOS -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Funcionario ----------------------------------------------------------------------------
 
-    public Funcionario getFuncionario(int id) throws SQLException {
+    public Funcionario getFuncionario(int id) throws SQLException, Exception {
         Funcionario func = null;
         String sql = "select * from Funcionarios where ID = %d";
         sql = String.format(sql, id);
         ResultSet rs = db.executeQuery(sql);
-        func = this.getFuncionarioH(rs);
-        return func;
+        if (rs.next()) {
+            return getFuncionarioH(rs);
+        } else {
+            throw new Exception("Usuario no Existe");
+        }
     }
 
     public void addFuncionario(Funcionario func) throws Exception {
@@ -125,13 +137,16 @@ public class Dao {
     }
 
 // Usuario ------------------------------------------------------------------------------
-    public Usuario getUsuario(String cuenta, String pass) throws SQLException {
+    public Usuario getUsuario(String cuenta, String pass) throws SQLException, Exception {
         Usuario user = null;
         String sql = "select * from Usuarios where cuenta= '%s' AND password = '%s'";
         sql = String.format(sql, cuenta, pass);
         ResultSet rs = db.executeQuery(sql);
-        user = this.getUsuarioH(rs);
-        return user;
+        if (rs.next()) {
+            return getUsuarioH(rs);
+        } else {
+            return null;
+        }
     }
 
     public void addUsuario(Usuario usuario) throws Exception {
@@ -150,13 +165,29 @@ public class Dao {
     }
 
 // Dependencia ------------------------------------------------------------------------------
-    public Dependencia getDependencia(int id) throws SQLException {
+    public Dependencia getDependencia(int id) throws SQLException, Exception {
         Dependencia dependencia = null;
         String sql = "select * from Dependencias where ID = %d";
         sql = String.format(sql, id);
         ResultSet rs = db.executeQuery(sql);
-        dependencia = getDependenciaH(rs);
-        return dependencia;
+        if (rs.next()) {
+            return getDependenciaH(rs);
+        } else {
+            throw new Exception("Usuario no Existe");
+        }
+
+    }
+
+    public Dependencia getDependencia_fromFuncionario(int id) throws SQLException, Exception {
+        Dependencia dependencia = null;
+        String sql = "select * from Dependencias where administrador = %d";
+        sql = String.format(sql, id);
+        ResultSet rs = db.executeQuery(sql);
+        if (rs.next()) {
+            return getDependenciaH(rs);
+        } else {
+            throw new Exception("Usuario no Existe");
+        }
     }
 
     public void addDependencia(Dependencia dependencia) throws Exception {
@@ -173,7 +204,7 @@ public class Dao {
     }
 
 // Bien ------------------------------------------------------------------------------
-    public Bien getBien(int id) throws SQLException {
+    public Bien getBien(int id) throws SQLException, Exception {
         Bien bien = null;
         String sql = "select * from Bienes where ID = %d";
         sql = String.format(sql, id);
@@ -217,7 +248,7 @@ public class Dao {
     }
 
     // Solicitud ------------------------------------------------------------------------------
-    public Solicitud getSolicitud(int id) throws SQLException {
+    public Solicitud getSolicitud(int id) throws SQLException, Exception {
         Solicitud solicitud = null;
         String sql = "Select * from Solicitudes where ID = %d";
         sql = String.format(sql, id);
@@ -244,29 +275,17 @@ public class Dao {
             solicitud.setID(PK);
         }
     }
-    
-    public List<Solicitud> getSolicitudes(Dependencia depe) throws SQLException{
+
+    public List<Solicitud> getSolicitudes(Dependencia depe) throws SQLException, Exception {
         List<Solicitud> solicitudes = new ArrayList<>();
         String sql = "select * from Solicitudes where dependencia = %d";
         sql = String.format(sql, depe.getID());
         ResultSet rs = db.executeQuery(sql);
         Solicitud solicitud = null;
-        while(rs.next()){
-            solicitud = new Solicitud();
-            solicitud.setID(rs.getInt("ID"));
-            solicitud.setComprobante(rs.getString("comprobante"));
-            solicitud.setFecha(rs.getDate("fecha"));
-            solicitud.setTipo(rs.getInt("tipo"));
-            solicitud.setCantidad(rs.getInt("cantidad"));
-            solicitud.setTotal(rs.getFloat("total"));
-            solicitud.setEstado(rs.getInt("estado"));
-            solicitud.setDependencia(depe);
-            solicitud.setRegistrador(getFuncionarioH(rs));
-            solicitud.setBienes(this.getBienes(solicitud));
+        while (rs.next()) {
+            solicitudes.add(getSolicitudH(rs));
         }
         return solicitudes;
     }
-    
-    
 
 }

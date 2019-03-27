@@ -39,6 +39,7 @@
             <form class="form-inline" action="/Registrar_Comprobante">
                 <table class="table table-hover">
                     <thead>
+                        
                         <tr>
                             <th>Descripcion</th>
                             <th>Marca</th>
@@ -46,6 +47,7 @@
                             <th>Precio Unitario</th>
                             <th>Cantidad</th>
                         </tr>
+                        
                     </thead>
                     <tbody>
                         <tr>
