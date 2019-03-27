@@ -22,7 +22,7 @@
             </center>
             <br>
             <form method ="POST" name="iniciar_sesion" action="UserLogin/Login">
-                <center> 
+                <center>
                     <div class="input-group">
                         <div class="col-xs-12">
                             <div class="input-group">
