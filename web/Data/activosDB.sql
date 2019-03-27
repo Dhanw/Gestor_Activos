@@ -175,16 +175,16 @@ insert into Dependencias(nombre,ubicacion,administrador) values('Escuela de info
 insert into Dependencias(nombre,ubicacion,administrador) values('Escuela de matematica','Heredia Centro',NULL);
 
 
-insert into puestos(nombre,funcionario,dependencia) values ("Administrador de la dependencia",1,1);
-insert into puestos(nombre,funcionario,dependencia) values ("Secretaria de la OCCB", 2,1);
-insert into puestos(nombre,funcionario,dependencia) values ("Jefe de la OCCB", 3,1);
-insert into puestos(nombre,funcionario,dependencia) values ("Registrador de bienes", 4,1);
-insert into puestos(nombre,funcionario,dependencia) values ("Registrador de bienes", 9,1);
-insert into puestos(nombre,funcionario,dependencia) values ("Registrador de bienes", 8,1);
-insert into puestos(nombre,funcionario,dependencia) values ("Jefe de RRHH", 5,1 );
-insert into puestos(nombre,funcionario,dependencia)  values ("Jefe de RRHH Y OCCB", 6,1);
-insert into puestos(nombre,funcionario,dependencia)  values ("Profesor Arqui", 10,1 );
-insert into puestos(nombre,funcionario,dependencia)  values ("Conserje", 8,1 );
+insert into Puestos(nombre,funcionario,dependencia) values ("Administrador de la dependencia",1,1);
+insert into Puestos(nombre,funcionario,dependencia) values ("Secretaria de la OCCB", 2,1);
+insert into Puestos(nombre,funcionario,dependencia) values ("Jefe de la OCCB", 3,1);
+insert into Puestos(nombre,funcionario,dependencia) values ("Registrador de bienes", 4,1);
+insert into Puestos(nombre,funcionario,dependencia) values ("Registrador de bienes", 9,1);
+insert into Puestos(nombre,funcionario,dependencia) values ("Registrador de bienes", 8,1);
+insert into Puestos(nombre,funcionario,dependencia) values ("Jefe de RRHH", 5,1 );
+insert into Puestos(nombre,funcionario,dependencia)  values ("Jefe de RRHH Y OCCB", 6,1);
+insert into Puestos(nombre,funcionario,dependencia)  values ("Profesor Arqui", 10,1 );
+insert into Puestos(nombre,funcionario,dependencia)  values ("Conserje", 8,1 );
 
 
 insert into Usuarios(cuenta,password,rol,funcionario) values("admin_info","aaa",1,1);

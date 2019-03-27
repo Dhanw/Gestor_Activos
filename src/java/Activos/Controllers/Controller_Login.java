@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Activos.Controller;
+package Activos.Controllers;
 
-import Activos.Logic.Model;
 import Activos.Logic.Usuario;
+import static Activos.Logic.Usuario.ADMINISTRADOR_DEPENDENCIA;
+import Activos.Models.Model_Login;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,14 +23,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "Controller_Login", urlPatterns = {"/UserLogin/PrepareLogin", "/UserLogin/Login", "/UserLogin/Logout"})
 public class Controller_Login extends HttpServlet {
 
-    Model dao = new Model();
-    public static final int INDEFINIDO = 0;
-    public static final int ADMINISTRADOR_DEPENDENCIA = 1;
-    public static final int SECRETARIA_OCCB = 2;
-    public static final int JEFE_OCCB = 3;
-    public static final int REGISTRADOR_BIENES = 4;
-    public static final int JEFE_RRH = 5;
-    public static final int JEFE_OCBB_RHH = 7;
+    private Model_Login model = new Model_Login();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -65,26 +59,20 @@ public class Controller_Login extends HttpServlet {
 
     protected void prepareLogin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Usuario user = new Usuario();
+        Usuario user = model.getUser();
         request.setAttribute("user", user);
         request.getRequestDispatcher("/UserLogin/Login_View.jsp").forward(request, response);
     }
 
     private void Login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        Usuario user_tmp = new Usuario();
-        updateModel(user_tmp, request);
         // Busca el usuario en la DB, si no lo encuentra se regresa al login
+        this.updateModel(model.getUser(), request);
         try {
-            Usuario actual = dao.getUsuario(request.getParameter("cuenta"), request.getParameter("password"));
-//        actual = new Usuario(1, "admin_info", "aaa", 1, new Funcionario(1, "403013010", "Oscar Campos"));
-            if (actual == null) {
-                request.getRequestDispatcher("/UserLogin/Login_View.jsp").forward(request, response);
-            } else {
-                request.getSession(true).setAttribute("user", actual);
-                seleccionador(request, response, actual.getRol());
+            Usuario sesion = model.Login(request.getParameter("cuenta"), request.getParameter("password"));
+            if (sesion != null) {
+                request.getSession(true).setAttribute("user", sesion);
+                this.seleccionador(request, response, sesion.getRol());
             }
-
             request.getRequestDispatcher("/UserLogin/Login_View.jsp").forward(request, response);
         } catch (Exception ex) {
         }

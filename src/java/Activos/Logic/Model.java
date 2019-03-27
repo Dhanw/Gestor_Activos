@@ -13,7 +13,6 @@ import java.util.List;
  *
  * @author Jose model creado
  */
-
 public class Model {
 
     private Dao dao;
@@ -34,44 +33,45 @@ public class Model {
     public Usuario getUsuario(String cuenta, String pass) throws SQLException {
         return dao.getUsuario(cuenta, pass);
     }
-    
-    public void addUsuario(Usuario usuario) throws Exception{
+
+    public void addUsuario(Usuario usuario) throws Exception {
         dao.addUsuario(usuario);
     }
-    
-    public Funcionario getFuncionario(int id) throws SQLException{
+
+    public Funcionario getFuncionario(int id) throws SQLException {
         return dao.getFuncionario(id);
     }
-    
-    public void addFuncionario(Funcionario funcionario) throws Exception{
+
+    public void addFuncionario(Funcionario funcionario) throws Exception {
         dao.addFuncionario(funcionario);
     }
-    
-    public Dependencia getDependencia(int id) throws SQLException{
+
+    public Dependencia getDependencia(int id) throws SQLException {
         return dao.getDependencia(id);
     }
-    
-    public void addDependencia(Dependencia dependencia) throws Exception{
+
+    public void addDependencia(Dependencia dependencia) throws Exception {
         dao.addDependencia(dependencia);
     }
-    
-    public Bien getBien(int id) throws SQLException{
+
+    public Bien getBien(int id) throws SQLException {
         return dao.getBien(id);
     }
-    
-    public List<Bien> getBienesPorSolicitud(Solicitud solicitud) throws SQLException{
+
+    public List<Bien> getBienesPorSolicitud(Solicitud solicitud) throws SQLException {
         return dao.getBienes(solicitud);
     }
-    
-    public void addBien(Bien bien) throws Exception{
+
+    public void addBien(Bien bien) throws Exception {
         dao.addBien(bien);
     }
-    
-    public Solicitud getSolicitud(int id) throws SQLException{
+
+    public Solicitud getSolicitud(int id) throws SQLException {
         return dao.getSolicitud(id);
     }
-    
-    public List<Solicitud> solicitudesPorDependencia(Dependencia depe) throws SQLException{
+
+    public List<Solicitud> solicitudesPorDependencia(Dependencia depe) throws SQLException {
         return dao.getSolicitudes(depe);
     }
+
 }

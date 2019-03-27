@@ -5,8 +5,6 @@
  */
 package Activos.Logic;
 
-import java.sql.SQLException;
-
 /**
  *
  * @author jorac
