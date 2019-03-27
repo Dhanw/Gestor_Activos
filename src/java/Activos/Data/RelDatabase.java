@@ -74,4 +74,16 @@ public class RelDatabase {
         }
         return null;
     }
+    
+    public int executeUpdateWithKeys(String statement) {
+        try {
+            Statement stm = cnx.createStatement();
+            stm.executeUpdate(statement,Statement.RETURN_GENERATED_KEYS);
+            ResultSet keys = stm.getGeneratedKeys();
+            keys.next();
+            return keys.getInt(1);
+        } catch (SQLException ex) {
+            return -1;
+        }
+    }    
 }

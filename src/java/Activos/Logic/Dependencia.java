@@ -15,6 +15,9 @@ public class Dependencia {
     String ubicacion;
     Funcionario administrador;
 
+    public Dependencia() {
+    }
+
     public Dependencia(int ID, String nombre, String ubicacion, Funcionario administrador) {
         this.ID = ID;
         this.nombre = nombre;

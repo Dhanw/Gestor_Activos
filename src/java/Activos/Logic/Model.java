@@ -7,6 +7,7 @@ package Activos.Logic;
 
 import Activos.Data.Dao;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
@@ -33,5 +34,37 @@ public class Model {
     public Usuario getUsuario(String cuenta, String pass) throws SQLException {
         return dao.getUsuario(cuenta, pass);
     }
-
+    
+    public void addUsuario(Usuario usuario) throws Exception{
+        dao.addUsuario(usuario);
+    }
+    
+    public Funcionario getFuncionario(int id) throws SQLException{
+        return dao.getFuncionario(id);
+    }
+    
+    public void addFuncionario(Funcionario funcionario) throws Exception{
+        dao.addFuncionario(funcionario);
+    }
+    
+    public Dependencia getDependencia(int id) throws SQLException{
+        return dao.getDependencia(id);
+    }
+    
+    public void addDependencia(Dependencia dependencia) throws Exception{
+        dao.addDependencia(dependencia);
+    }
+    
+    public Bien getBien(int id) throws SQLException{
+        return dao.getBien(id);
+    }
+    
+    public List<Bien> getBienesPorSolicitud(Solicitud solicitud) throws SQLException{
+        return dao.getBienes(solicitud);
+    }
+    
+    public void addBien(Bien bien) throws Exception{
+        dao.addBien(bien);
+    }
+    
 }

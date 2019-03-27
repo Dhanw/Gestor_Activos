@@ -6,6 +6,7 @@
 package Activos.Logic;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,16 +33,17 @@ public class Solicitud {
     Date fecha;
     int tipo;
     int estado;
-    Usuario registrador;
+    Funcionario registrador;
     Dependencia dependencia;
     int cantidad;
     double total;
     List<Bien> bienes;
+    
     public Solicitud() {
-
+        bienes = new ArrayList<>();
     }
 
-    public Solicitud(String comprobante, Date fecha, int tipo, int estado, Usuario registrador, Dependencia dependencia, int cantidad, double total, List<Bien> bienes) {
+    public Solicitud(String comprobante, Date fecha, int tipo, int estado, Funcionario registrador, Dependencia dependencia, int cantidad, double total, List<Bien> bienes) {
         this.comprobante = comprobante;
         this.fecha = fecha;
         this.tipo = tipo;
@@ -53,7 +55,7 @@ public class Solicitud {
         this.bienes = bienes;
     }
 
-    public Solicitud(String comprobante, Date fecha, int tipo, Usuario registrador, Dependencia dependencia, List<Bien> bienes) {
+    public Solicitud(String comprobante, Date fecha, int tipo, Funcionario registrador, Dependencia dependencia, List<Bien> bienes) {
         this.comprobante = comprobante;
         this.fecha = fecha;
         this.tipo = tipo;
@@ -106,11 +108,11 @@ public class Solicitud {
         this.estado = estado;
     }
 
-    public Usuario getRegistrador() {
+    public Funcionario getRegistrador() {
         return registrador;
     }
 
-    public void setRegistrador(Usuario registrador) {
+    public void setRegistrador(Funcionario registrador) {
         this.registrador = registrador;
     }
 
@@ -143,7 +145,6 @@ public class Solicitud {
     }
 
     public void setBienes(List<Bien> bienes) {
-        this.bienes = bienes;
         this.bienes = bienes;
         this.cantidad = bienes.size();
         for(Bien b: bienes){

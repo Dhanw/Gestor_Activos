@@ -49,11 +49,11 @@ public class Bien {
         this.ID = ID;
     }
 
-    public String getDescripciones() {
+    public String getDescripcion() {
         return descripcion;
     }
 
-    public void setDescripciones(String descripcion) {
+    public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
