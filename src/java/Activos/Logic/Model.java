@@ -67,4 +67,11 @@ public class Model {
         dao.addBien(bien);
     }
     
+    public Solicitud getSolicitud(int id) throws SQLException{
+        return dao.getSolicitud(id);
+    }
+    
+    public List<Solicitud> solicitudesPorDependencia(Dependencia depe) throws SQLException{
+        return dao.getSolicitudes(depe);
+    }
 }

@@ -54,44 +54,45 @@ public class Dao {
     }
 
     private Dependencia getDependenciaH(ResultSet rs) throws SQLException {
-        Dependencia dependencia = null;
-        if(rs.next()){
-        dependencia = new Dependencia();
-        dependencia.setID(rs.getInt("ID"));
-        dependencia.setNombre(rs.getString("nombre"));
-        dependencia.setUbicacion(rs.getString("ubicacion"));
-        dependencia.setAdministrador(getFuncionarioH(rs));
+        Dependencia dependencia = new Dependencia();
+        if (rs.next()) {
+            dependencia.setID(rs.getInt("ID"));
+            dependencia.setNombre(rs.getString("nombre"));
+            dependencia.setUbicacion(rs.getString("ubicacion"));
+            dependencia.setAdministrador(getFuncionarioH(rs));
         }
         return dependencia;
     }
 
     private Solicitud getSolicitudH(ResultSet rs) throws SQLException {
-        Solicitud solicitud = new Solicitud();
-        if(rs.next()){
-        solicitud.setID(rs.getInt("ID"));
-        solicitud.setComprobante(rs.getString("comprobante"));
-        solicitud.setFecha(rs.getDate("fecha"));
-        solicitud.setTipo(rs.getInt("tipo"));
-        solicitud.setCantidad(rs.getInt("cantidad"));
-        solicitud.setTotal(rs.getFloat("total"));
-        solicitud.setEstado(rs.getInt("estado"));
-        solicitud.setDependencia(getDependenciaH(rs));
-        solicitud.setRegistrador(getFuncionarioH(rs));
-        solicitud.setBienes(this.getBienes(solicitud));
+        Solicitud solicitud = null;
+        if (rs.next()) {
+            solicitud = new Solicitud();
+            solicitud.setID(rs.getInt("ID"));
+            solicitud.setComprobante(rs.getString("comprobante"));
+            solicitud.setFecha(rs.getDate("fecha"));
+            solicitud.setTipo(rs.getInt("tipo"));
+            solicitud.setCantidad(rs.getInt("cantidad"));
+            solicitud.setTotal(rs.getFloat("total"));
+            solicitud.setEstado(rs.getInt("estado"));
+            solicitud.setDependencia(getDependenciaH(rs));
+            solicitud.setRegistrador(getFuncionarioH(rs));
+            solicitud.setBienes(this.getBienes(solicitud));
         }
         return solicitud;
     }
 
     private Bien getBienH(ResultSet rs) throws SQLException {
-        Bien bien = new Bien();
-        if(rs.next()){
-        bien.setID(rs.getInt("ID"));
-        bien.setMarca(rs.getString("marca"));
-        bien.setModelo(rs.getString("modelo"));
-        bien.setDescripcion(rs.getString("descripcion"));
-        bien.setPrecio(rs.getFloat("precio"));
-        bien.setCantidad(rs.getInt("cantidad"));
-        bien.setSolicitud(getSolicitudH(rs));
+        Bien bien = null;
+        if (rs.next()) {
+            bien = new Bien();
+            bien.setID(rs.getInt("ID"));
+            bien.setMarca(rs.getString("marca"));
+            bien.setModelo(rs.getString("modelo"));
+            bien.setDescripcion(rs.getString("descripcion"));
+            bien.setPrecio(rs.getFloat("precio"));
+            bien.setCantidad(rs.getInt("cantidad"));
+            bien.setSolicitud(getSolicitudH(rs));
         }
 
         return bien;
@@ -243,5 +244,29 @@ public class Dao {
             solicitud.setID(PK);
         }
     }
+    
+    public List<Solicitud> getSolicitudes(Dependencia depe) throws SQLException{
+        List<Solicitud> solicitudes = new ArrayList<>();
+        String sql = "select * from Solicitudes where dependencia = %d";
+        sql = String.format(sql, depe.getID());
+        ResultSet rs = db.executeQuery(sql);
+        Solicitud solicitud = null;
+        while(rs.next()){
+            solicitud = new Solicitud();
+            solicitud.setID(rs.getInt("ID"));
+            solicitud.setComprobante(rs.getString("comprobante"));
+            solicitud.setFecha(rs.getDate("fecha"));
+            solicitud.setTipo(rs.getInt("tipo"));
+            solicitud.setCantidad(rs.getInt("cantidad"));
+            solicitud.setTotal(rs.getFloat("total"));
+            solicitud.setEstado(rs.getInt("estado"));
+            solicitud.setDependencia(depe);
+            solicitud.setRegistrador(getFuncionarioH(rs));
+            solicitud.setBienes(this.getBienes(solicitud));
+        }
+        return solicitudes;
+    }
+    
+    
 
 }

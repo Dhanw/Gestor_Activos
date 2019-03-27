@@ -44,8 +44,7 @@ public class Usuario {
         this.password = password;
         this.rol = rol;
     }
-    
-    
+
     public Usuario(String cuenta, String password, int rol, Funcionario funcionario) {
         this.cuenta = cuenta;
         this.password = password;
@@ -93,4 +92,21 @@ public class Usuario {
         this.funcionario = funcionario;
     }
 
+    public String getDescripcionRol() {
+        switch (rol) {
+            case ADMINISTRADOR_DEPENDENCIA:
+                return "Administrador de la dependencia";
+            case SECRETARIA_OCCB:
+                return "Secretaria OCCB";
+            case JEFE_OCCB:
+                return "Jefe OCCB";
+            case REGISTRADOR_BIENES:
+                return "Registrador de bienes";
+            case JEFE_RRH:
+                return "Jefe RRH";
+            case JEFE_OCBB_RHH:
+                return "Jefe OCBB y RHH";
+        }
+        return "Indefinido";
+    }
 }

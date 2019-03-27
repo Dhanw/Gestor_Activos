@@ -82,7 +82,6 @@ public class Controller_Login extends HttpServlet {
                 request.getRequestDispatcher("/UserLogin/Login_View.jsp").forward(request, response);
             } else {
                 request.getSession(true).setAttribute("user", actual);
-                request.setAttribute("usuario", actual); //Se le puede quitar por que ya esta guardado en la sesion
                 seleccionador(request, response, actual.getRol());
             }
 

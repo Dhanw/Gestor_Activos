@@ -38,7 +38,7 @@ public class Solicitud {
     int cantidad;
     double total;
     List<Bien> bienes;
-    
+
     public Solicitud() {
         bienes = new ArrayList<>();
     }
@@ -63,7 +63,7 @@ public class Solicitud {
         this.dependencia = dependencia;
         this.bienes = bienes;
         this.cantidad = bienes.size();
-        for(Bien b: bienes){
+        for (Bien b : bienes) {
             total = total + b.getPrecio();
         }
     }
@@ -147,15 +147,38 @@ public class Solicitud {
     public void setBienes(List<Bien> bienes) {
         this.bienes = bienes;
         this.cantidad = bienes.size();
-        for(Bien b: bienes){
+        for (Bien b : bienes) {
             total = total + b.getPrecio();
         }
     }
-    
-    
 
-    
-    
+    public String getDescripcionTipo() {
+        switch (tipo) {
+            case COMPRA:
+                return "Compra";
+            case DONACION:
+                return "Donacion";
+            case PRODUCCION:
+                return "Produccion";
+        }
 
-   
+        return "Indefinido";
+    }
+
+    public String getDescripcionEstado() {
+        switch (estado) {
+            case RECIBIDA:
+                return "Recibida";
+            case POR_VERIFICAR:
+                return "Por verificar";
+            case RECHAZADA:
+                return "rechazada";
+            case ESPERA_ROTULACION:
+                return "En espera de rotulacion";
+            case PROCESADA:
+                return "Procesada";
+        }
+        return "Indefinda";
+    }
+
 }
