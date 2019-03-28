@@ -10,6 +10,7 @@ package Activos.Logic;
  * @author jorac
  */
 public class Dependencia {
+
     int ID;
     String nombre;
     String ubicacion;
@@ -62,7 +63,20 @@ public class Dependencia {
     public void setAdministrador(Funcionario administrador) {
         this.administrador = administrador;
     }
-    
-    
-    
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof Dependencia)) {
+            return false;
+        }
+        Dependencia otro = (Dependencia) other;
+        return otro.getID() == ID;
+    }
+
 }

@@ -11,8 +11,8 @@ import Activos.Logic.Solicitud;
 import Activos.Logic.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,8 +26,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jorac
  */
-@WebServlet(name = "Controller_Solicitud", urlPatterns = {"/Solicitud/Solicitud_listar", "/Solicitud/Solicitud_crear", "/Solicitud/Solicitud_mostrar", "/Solicitud/Solicitud_eliminar", "/Solicitud/Solicitud_editar"
-                                                           , "/Solicitud/Filtro_Comprobante"})
+@WebServlet(name = "Controller_Solicitud", urlPatterns = {"/Solicitud/Solicitud_listar", "/Solicitud/Solicitud_crear", "/Solicitud/Solicitud_mostrar", "/Solicitud/Solicitud_eliminar", "/Solicitud/Solicitud_editar",
+    "/Solicitud/Filtro_Comprobante", "/Solicitud/Filtro_tipo", "/Solicitud/Filtro_estado"})
 public class Controller_Solicitud extends HttpServlet {
 
     /**
@@ -46,7 +46,7 @@ public class Controller_Solicitud extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             switch (request.getServletPath()) {
                 case "/Solicitud/Solicitud_listar":
-                    this.listarSolicitudes(request, response);
+                    this.listarSolicitudes(request, response, "todas");
                     break;
                 case "/Solicitud/Solicitud_crear":
                     this.crearSolicitud(request, response);
@@ -60,6 +60,14 @@ public class Controller_Solicitud extends HttpServlet {
                 case "/Solicitud/Solicitud_editar":
                     this.editarSolicitud(request, response);
                     break;
+                case "/Solicitud/Filtro_Comprobante":
+                    this.listarSolicitudes(request, response, "comprobante");
+                    break;
+                case "/Solicitud/Filtro_tipo":
+                    this.listarSolicitudes(request, response, "tipo");
+                    
+                case "/Solicitud/Filtro_estado":
+                    this.listarSolicitudes(request, response, "estado");
             }
 
         }
@@ -135,15 +143,35 @@ public class Controller_Solicitud extends HttpServlet {
         } catch (SQLException error) {
             request.setAttribute("mensaje", error.getMessage());
         }
-         request.getRequestDispatcher("/Solicitud/Solicitud_listar").forward(request, response);
+        request.getRequestDispatcher("/Solicitud/Solicitud_listar").forward(request, response);
     }
 
-    private void listarSolicitudes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void listarSolicitudes(HttpServletRequest request, HttpServletResponse response, String filtro) throws ServletException, IOException {
+
         try {
-            Usuario use=(Usuario) request.getSession().getAttribute("user");
-            Dependencia dep= Model.instance().getDependencia_fromFuncionario(use.getFuncionario().getID());
+            Usuario use = (Usuario) request.getSession().getAttribute("user");
+            Dependencia dep = Model.instance().getDependencia_fromFuncionario(use.getFuncionario().getID());
             request.setAttribute("depe", dep);
-            List<Solicitud> solicitudes=Model.instance().solicitudesPorDependencia(dep);
+            List<Solicitud> todas =  Model.instance().solicitudesPorDependencia(dep);
+            List<Solicitud> solicitudes = new ArrayList<>();
+            switch (filtro) {
+                case "todas":
+                    solicitudes = todas;
+                    break;
+                case "comprobante":
+                    solicitudes = (List<Solicitud>) Model.instance().SolicitudesPorComprobante((String) request.getParameter("comprobante"));
+                    solicitudes.retainAll(todas);
+                    break;
+                case "tipo":
+                    String tipo = request.getParameter("tipo");
+                    solicitudes = (List<Solicitud>) Model.instance().SolitudesTipo(tipo);
+                    solicitudes.retainAll(todas);
+                case "estado":
+                    String estado = request.getParameter("estado");
+                    solicitudes = (List<Solicitud>) Model.instance().SolitudesEstado(estado);
+                    solicitudes.retainAll(todas);
+            }
+
             request.setAttribute("soli", solicitudes);
             request.getRequestDispatcher("/Solicitud/Solicitud_Listado.jsp").forward(request, response);
         } catch (Exception ex) {

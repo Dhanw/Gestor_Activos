@@ -53,4 +53,18 @@ public class Funcionario {
         this.nombre = nombre;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof Funcionario)) {
+            return false;
+        }
+        Funcionario otro = (Funcionario) other;
+        return otro.getID() == ID;
+    }
 }

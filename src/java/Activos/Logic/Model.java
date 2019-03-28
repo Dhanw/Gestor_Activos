@@ -86,15 +86,41 @@ public class Model {
         dao.eliminarSolicitud(solicitud);
     }
 
-    public List<Solicitud> SolitudesTipo(int tipo) throws SQLException, Exception {
-        return dao.SolitudesTipo(tipo);   
+    public List<Solicitud> SolitudesTipo(String tipo) throws SQLException, Exception {
+        int nTipo = 0;
+        if ("Compra".startsWith(tipo) || "compra".startsWith(tipo) || "COMPRA".startsWith(tipo)) {
+            nTipo = 1;
+        } else if ("DONACION".startsWith(tipo) || "Donacion".startsWith(tipo) || "donacion".startsWith(tipo)) {
+            nTipo = 2;
+        } else if ("Produccion".startsWith(tipo) || "produccion".startsWith(tipo) || "PRODUCCION".startsWith(tipo)) {
+            nTipo = 3;
+        }
+        return dao.SolitudesTipo(nTipo);
+
     }
 
-    public List<Solicitud> SolitudesEstado(int estado) throws SQLException, Exception {
-        return dao.SolitudesEstado(estado);
+    public List<Solicitud> SolitudesEstado(String estado) throws SQLException, Exception {
+
+        int estadoParseado = 0;
+        if ("recibida".equals(estado) || "Recibida".equals(estado) || "RECIBIDA".equals(estado)) {
+            estadoParseado = 1;
+        }
+        else if("verificar".equals(estado) || "Por verificar".equals(estado) || "por verificar".equals(estado)){
+            estadoParseado = 2;
+        }
+        else if("rechazada".equals(estado) || "Rechazada".equals(estado) || "RECHAZADA".equals(estado)){
+            estadoParseado = 3;
+        }
+        else if("Espera".equals(estado) || "Espera rotulacion".equals(estado) || "espera rotulacion".equals(estado)){
+            estadoParseado = 4;
+        }
+        else if("Procesada".equals(estado) || "procesada".equals(estado) || "PROCESADA".equals(estado)){
+            estadoParseado = 5;
+        }
+        return dao.SolitudesEstado(estadoParseado);
     }
 
-    public Solicitud SolicitudPorComprobante(String comprobante) throws Exception {
+    public List<Solicitud> SolicitudesPorComprobante(String comprobante) throws Exception {
         return dao.getByComprobante(comprobante);
     }
 

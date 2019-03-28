@@ -340,7 +340,6 @@ public class Dao {
         String sql = "select * from Solicitudes where estado = %d";
         sql = String.format(sql, estado);
         ResultSet rs = db.executeQuery(sql);
-        Solicitud soli = null;
         while (rs.next()) {
             lista.add(this.getSolicitudH(rs));
         }
@@ -348,14 +347,16 @@ public class Dao {
         return lista;
     }
    
-   public Solicitud getByComprobante(String comprobante) throws Exception{
-       Solicitud  soli = null;
-       String sql = "select * from Solicitudes where comprobante = '%s'";
-       sql = String.format(sql, comprobante);
+   public List<Solicitud> getByComprobante(String comprobante) throws Exception{
+       List<Solicitud> lista = new ArrayList<>();
+       String sql = "select * from Solicitudes where comprobante LIKE '%" + comprobante + "%'";
+       //sql = String.format(sql, comprobante);
        ResultSet rs = db.executeQuery(sql);
-       if(rs.next()){
-       return this.getSolicitudH(rs);
+       while(rs.next()){
+            lista.add(this.getSolicitudH(rs));
        }
-       return soli;
+       
+       
+       return lista;
    }
 }

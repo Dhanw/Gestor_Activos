@@ -10,6 +10,7 @@ package Activos.Logic;
  * @author jorac
  */
 public class Activo {
+
     int ID;
     String codigo;
     String categoria;
@@ -69,6 +70,21 @@ public class Activo {
 
     public void setPuesto(Puesto puesto) {
         this.puesto = puesto;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof Activo)) {
+            return false;
+        }
+        Activo otro = (Activo)other;
+        return otro.getID() == ID;
     }
     
     

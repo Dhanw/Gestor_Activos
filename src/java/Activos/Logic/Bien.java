@@ -39,7 +39,6 @@ public class Bien {
         this.cantidad = cantidad;
         this.solicitud = solicitud;
     }
-    
 
     public int getID() {
         return ID;
@@ -95,6 +94,21 @@ public class Bien {
 
     public void setSolicitud(Solicitud solicitud) {
         this.solicitud = solicitud;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof Bien)) {
+            return false;
+        }
+        Bien otro = (Bien) other;
+        return otro.getID() == ID;
     }
 
 }

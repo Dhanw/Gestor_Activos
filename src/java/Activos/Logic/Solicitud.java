@@ -181,4 +181,19 @@ public class Solicitud {
         return "Indefinda";
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof Solicitud)) {
+            return false;
+        }
+        Solicitud otro = (Solicitud) other;
+        return otro.getID() == ID;
+    }
+
 }

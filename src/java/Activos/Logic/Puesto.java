@@ -60,5 +60,18 @@ public class Puesto {
         this.dependencia = dependencia;
     }
     
-    
+    @Override
+        public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof Puesto)) {
+            return false;
+        }
+        Puesto otro = (Puesto) other;
+        return otro.getID() == ID;
+    }
 }

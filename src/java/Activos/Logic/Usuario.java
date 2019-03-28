@@ -109,4 +109,19 @@ public class Usuario {
         }
         return "Indefinido";
     }
+    
+    @Override
+        public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof Usuario)) {
+            return false;
+        }
+        Usuario otro = (Usuario) other;
+        return otro.getID() == ID;
+    }
 }

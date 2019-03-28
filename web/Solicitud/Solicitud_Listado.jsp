@@ -22,22 +22,44 @@
                 <%
                     Usuario use = (Usuario) session.getAttribute("user");
 
-                    Dependencia dep=(Dependencia)request.getAttribute("depe");
+                    Dependencia dep = (Dependencia) request.getAttribute("depe");
                     if (dep != null) {
-                        List<Solicitud> solicitudes= (List<Solicitud>)request.getAttribute("soli");
+                        List<Solicitud> solicitudes = (List<Solicitud>) request.getAttribute("soli");
 
                 %> 
                 <h2>Solicitudes - (<%=dep.getNombre()%>)</h2>
-               
+
             </center>
             <br>
             <div class="input-group">
                 <div class="col-xs-12">
-                    <div class="input-group-btn">
-                        <h4>Buscar Comprobante</h4>
-                        <input name="Filtro_Comprobante" type="text" class="form-control" placeholder="No. Comprobante" name="search">
-                        <button action="Solicitud/Filtro_Comprobante" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    <div class="container">
+                    <div class="input-group-btn row">
+                        <div class="col-lg-3" name="filtro_comprobante">
+                            <form action="Solicitud/Filtro_Comprobante" method="POST">
+                                <h4>Buscar Comprobante</h4>
+                                <input name="comprobante" type="text" class="form-control" placeholder="No. Comprobante">
+                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            </form>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-lg-3" name="filtro_tipo">
+                            <form action="Solicitud/Filtro_tipo" method="POST">
+                                <h4>Buscar por tipo</h4>
+                                <input name="tipo" type="text" class="form-control" placeholder="Tipo solicitud">
+                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            </form>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-lg-3" name="filtro_tipo">
+                            <form action="Solicitud/Filtro_estado" method="POST">
+                                <h4>Buscar por estado</h4>
+                                <input name="estado" type="text" class="form-control" placeholder="Estado">
+                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            </form>
+                        </div>
                     </div>
+                        </div>
                 </div>
             </div>
             <table class="table table-hover">
@@ -49,11 +71,11 @@
                         <th>Tipo</th>
                         <th>Estado</th>
                         <th>Eliminar</th>
-                         <th>Mostrar</th>
+                        <th>Mostrar</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <%  
+                    <%
                         for (Solicitud sol : solicitudes) {
                     %>
                     <tr>
@@ -63,9 +85,10 @@
                         <td><%=sol.getDescripcionTipo()%></td>
                         <td><%=sol.getDescripcionEstado()%></td>
                         <td><a href="Solicitud/Solicitud_eliminar?ID=<%=sol.getID()%>"><img width=30px" src="Images/delete.png"/></a></td>
-                        <td><a href="Solicitud/Solicitud_mostrar?ID=<%=sol.getID()%>">Mostrar</a></td>
+                        <td><a href="Solicitud/Solicitud_mostrar?ID=<%=sol.getID()%>"><img width=30px" src="Images/binoculars.png"/></a></td>
                     </tr>
-                    <%}}%>
+                    <%}
+                        }%>
                 </tbody>
             </table>
         </div>
