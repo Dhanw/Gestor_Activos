@@ -70,6 +70,8 @@
                         <th>Fecha</th>
                         <th>Tipo</th>
                         <th>Estado</th>
+                        <th>Total</th>
+                        <th>Precio</th>
                         <th>Eliminar</th>
                         <th>Mostrar</th>
                     </tr>
@@ -84,6 +86,8 @@
                         <td><%=sol.getFecha()%></td>
                         <td><%=sol.getDescripcionTipo()%></td>
                         <td><%=sol.getDescripcionEstado()%></td>
+                        <td><%=sol.getCantidad()%></td>
+                        <td><%=sol.getTotal()%></td>
                         <td><a href="Solicitud/Solicitud_eliminar?ID=<%=sol.getID()%>"><img width=30px" src="Images/delete.png"/></a></td>
                         <td><a href="Solicitud/Solicitud_mostrar?ID=<%=sol.getID()%>"><img width=30px" src="Images/binoculars.png"/></a></td>
                     </tr>

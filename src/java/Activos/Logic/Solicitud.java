@@ -62,6 +62,12 @@ public class Solicitud {
         this.cantidad = cantidad;
         this.total = total;
         this.bienes = bienes;
+        this.cantidad = 0;
+
+        for (Bien b : bienes) {
+            total = total + b.getPrecio();
+            this.cantidad = this.cantidad + b.getCantidad();
+        }
     }
 
     public Solicitud(String comprobante, Date fecha, int tipo, Funcionario registrador, Dependencia dependencia, List<Bien> bienes) {
@@ -71,9 +77,11 @@ public class Solicitud {
         this.registrador = registrador;
         this.dependencia = dependencia;
         this.bienes = bienes;
-        this.cantidad = bienes.size();
+        this.cantidad = 0;
+
         for (Bien b : bienes) {
             total = total + b.getPrecio();
+            this.cantidad = this.cantidad + b.getCantidad();
         }
     }
 
@@ -155,9 +163,11 @@ public class Solicitud {
 
     public void setBienes(List<Bien> bienes) {
         this.bienes = bienes;
-        this.cantidad = bienes.size();
+         this.cantidad = 0;
+
         for (Bien b : bienes) {
             total = total + b.getPrecio();
+            this.cantidad = this.cantidad + b.getCantidad();
         }
     }
 
