@@ -93,7 +93,7 @@ public class Dao {
 
     private Bien getBienH(ResultSet rs) throws SQLException, Exception {
         Bien bien = new Bien();
-        try{
+        try {
             bien.setID(rs.getInt("ID"));
             bien.setMarca(rs.getString("marca"));
             bien.setModelo(rs.getString("modelo"));
@@ -102,9 +102,9 @@ public class Dao {
             bien.setCantidad(rs.getInt("cantidad"));
             bien.setSolicitud(getSolicitudH(rs));
             return bien;
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             return null;
-        } 
+        }
     }
     // METODOS -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Funcionario ----------------------------------------------------------------------------
@@ -211,10 +211,10 @@ public class Dao {
         ResultSet rs = db.executeQuery(sql);
         if (rs.next()) {
             return this.getBienH(rs);
-        }else{
+        } else {
             return null;
         }
-        
+
     }
 
     public List<Bien> getBienes(Solicitud solicitud) throws SQLException {
@@ -258,7 +258,7 @@ public class Dao {
         ResultSet rs = db.executeQuery(sql);
         if (rs.next()) {
             return this.getSolicitudH(rs);
-        }else{
+        } else {
             return null;
         }
     }
@@ -299,17 +299,63 @@ public class Dao {
         String sql = "delete from Bienes where solicitud = %d";
         sql = String.format(sql, solicitud);
         int count = db.executeUpdate(sql);
-        if (count == 0) {
-            throw new SQLException("No existe registro en bien asociado con codigo de solitiud " + solicitud);
-        }
 
         //Borrar la solicitud
         String sqlS = "delete from Solicitudes where ID = %d";
-        sqlS = String.format(sqlS,solicitud);
+        sqlS = String.format(sqlS, solicitud);
         int countB = db.executeUpdate(sqlS);
         if (countB == 0) {
             throw new SQLException("No existe registro con codigo de solicitud " + solicitud);
         }
+        if (count == 0) {
+            throw new SQLException("No existe el bien asociado con codigo de solicitud " + solicitud);
+        }
     }
 
+    public void eliminarBien(int bien) throws SQLException {
+        String sql = "delete from Bienes where ID = %d";
+        sql = String.format(sql, bien);
+        int count = db.executeUpdate(sql);
+        if (count == 0) {
+            throw new SQLException("No existe el bien  " + bien);
+        }
+    }
+
+    // SOLITUDES FILTROS
+    public List<Solicitud> SolitudesTipo(int tipo) throws SQLException, Exception {
+        List<Solicitud> lista = new ArrayList<>();
+        String sql = "select * from Solicitudes where tipo = %d";
+        sql = String.format(sql, tipo);
+        ResultSet rs = db.executeQuery(sql);
+        Solicitud soli = null;
+        while (rs.next()) {
+            lista.add(this.getSolicitudH(rs));
+        }
+
+        return lista;
+    }
+
+    public List<Solicitud> SolitudesEstado(int estado) throws SQLException, Exception {
+        List<Solicitud> lista = new ArrayList<>();
+        String sql = "select * from Solicitudes where estado = %d";
+        sql = String.format(sql, estado);
+        ResultSet rs = db.executeQuery(sql);
+        Solicitud soli = null;
+        while (rs.next()) {
+            lista.add(this.getSolicitudH(rs));
+        }
+
+        return lista;
+    }
+   
+   public Solicitud getByComprobante(String comprobante) throws Exception{
+       Solicitud  soli = null;
+       String sql = "select * from Solicitudes where comprobante = '%s'";
+       sql = String.format(sql, comprobante);
+       ResultSet rs = db.executeQuery(sql);
+       if(rs.next()){
+       return this.getSolicitudH(rs);
+       }
+       return soli;
+   }
 }

@@ -19,6 +19,7 @@
         </ul>
         <%}%>
         <ul class="nav navbar-nav navbar-right">
+            <li style="color:#ffffff"><%= user.getFuncionario().getNombre()%> ( <%= user.getDescripcionRol() %> )</li>
             <li><a href="UserLogin/Logout"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
         </ul>
         <%}%>

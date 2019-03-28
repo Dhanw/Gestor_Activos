@@ -5,12 +5,15 @@
  */
 package Activos.Controllers;
 
+import Activos.Logic.Dependencia;
 import Activos.Logic.Model;
 import Activos.Logic.Solicitud;
+import Activos.Logic.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -23,7 +26,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jorac
  */
-@WebServlet(name = "Controller_Solicitud", urlPatterns = {"/Solicitud/Solicitud_listar", "/Solicitud/Solicitud_crear", "/Solicitud/Solicitud_mostrar", "/Solicitud/Solicitud_eliminar", "/Solicitud/Solicitud_editar"})
+@WebServlet(name = "Controller_Solicitud", urlPatterns = {"/Solicitud/Solicitud_listar", "/Solicitud/Solicitud_crear", "/Solicitud/Solicitud_mostrar", "/Solicitud/Solicitud_eliminar", "/Solicitud/Solicitud_editar"
+                                                           , "/Solicitud/Filtro_Comprobante"})
 public class Controller_Solicitud extends HttpServlet {
 
     /**
@@ -135,7 +139,16 @@ public class Controller_Solicitud extends HttpServlet {
     }
 
     private void listarSolicitudes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/Solicitud/Solicitud_Listado.jsp").forward(request, response);
+        try {
+            Usuario use=(Usuario) request.getSession().getAttribute("user");
+            Dependencia dep= Model.instance().getDependencia_fromFuncionario(use.getFuncionario().getID());
+            request.setAttribute("depe", dep);
+            List<Solicitud> solicitudes=Model.instance().solicitudesPorDependencia(dep);
+            request.setAttribute("soli", solicitudes);
+            request.getRequestDispatcher("/Solicitud/Solicitud_Listado.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(Controller_Solicitud.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

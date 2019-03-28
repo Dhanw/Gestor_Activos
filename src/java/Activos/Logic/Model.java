@@ -6,7 +6,9 @@
 package Activos.Logic;
 
 import Activos.Data.Dao;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -81,7 +83,19 @@ public class Model {
     }
 
     public void eliminarSolicitud(int solicitud) throws SQLException {
-         dao.eliminarSolicitud(solicitud);
+        dao.eliminarSolicitud(solicitud);
+    }
+
+    public List<Solicitud> SolitudesTipo(int tipo) throws SQLException, Exception {
+        return dao.SolitudesTipo(tipo);   
+    }
+
+    public List<Solicitud> SolitudesEstado(int estado) throws SQLException, Exception {
+        return dao.SolitudesEstado(estado);
+    }
+
+    public Solicitud SolicitudPorComprobante(String comprobante) throws Exception {
+        return dao.getByComprobante(comprobante);
     }
 
 }

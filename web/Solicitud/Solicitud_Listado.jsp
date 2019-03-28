@@ -20,22 +20,23 @@
         <div class="container">
             <center>
                 <%
-                    Usuario use =(Usuario)session.getAttribute("user");
-                    
-                    Dependencia dep= Model.instance().getDependencia_fromFuncionario(use.getFuncionario().getID());
-                    if(dep!=null) {
-                
+                    Usuario use = (Usuario) session.getAttribute("user");
+
+                    Dependencia dep=(Dependencia)request.getAttribute("depe");
+                    if (dep != null) {
+                        List<Solicitud> solicitudes= (List<Solicitud>)request.getAttribute("soli");
+
                 %> 
                 <h2>Solicitudes - (<%=dep.getNombre()%>)</h2>
-                <%}%>
+               
             </center>
             <br>
             <div class="input-group">
                 <div class="col-xs-12">
                     <div class="input-group-btn">
                         <h4>Buscar Comprobante</h4>
-                        <input type="text" class="form-control" placeholder="No. Comprobante" name="search">
-                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                        <input name="Filtro_Comprobante" type="text" class="form-control" placeholder="No. Comprobante" name="search">
+                        <button action="Solicitud/Filtro_Comprobante" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                     </div>
                 </div>
             </div>
@@ -51,18 +52,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <%  List<Solicitud> solicitudes = Model.instance().solicitudesPorDependencia(dep);
-                        for(Solicitud sol:solicitudes){                 
+                    <%  
+                        for (Solicitud sol : solicitudes) {
                     %>
                     <tr>
                         <td><a href="#"></a><%=sol.getID()%>  </td>
-                        <td><%=sol.getComprobante() %></td>
-                        <td><%=sol.getFecha() %></td>
-                        <td><%=sol.getTipo() %></td>
-                        <td><%=sol.getEstado() %></td>
-                        <td><a href="Solicitud/Solicitud_eliminar?ID=<%=sol.getID()%>">Eliminar</a></td>
+                        <td><%=sol.getComprobante()%></td>
+                        <td><%=sol.getFecha()%></td>
+                        <td><%=sol.getDescripcionTipo()%></td>
+                        <td><%=sol.getDescripcionEstado()%></td>
+                        <td><a href="Solicitud/Solicitud_eliminar?ID=<%=sol.getID()%>"><img width=30px" src="Images/delete.png"/></a></td>
                     </tr>
-                 <%}   %>
+                    <%}}%>
                 </tbody>
             </table>
         </div>
