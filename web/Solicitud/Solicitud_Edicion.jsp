@@ -21,7 +21,7 @@
             <br> <br>
             <form class="form-inline" action="/Registrar_Comprobante">
                 <div class="form-group">
-                    <label for="Comprobante">Comrpobante:</label>
+                    <label for="Comprobante">Comprobante:</label>
                     <input type="text" class="form-control" id="comprobante" placeholder="No.Comprobante" name="comprobante">
                 </div>
                 <div class="form-group">

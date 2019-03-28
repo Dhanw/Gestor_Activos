@@ -26,8 +26,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jorac
  */
-@WebServlet(name = "Controller_Solicitud", urlPatterns = {"/Solicitud/Solicitud_listar", "/Solicitud/Solicitud_crear", "/Solicitud/Solicitud_mostrar", "/Solicitud/Solicitud_eliminar", "/Solicitud/Solicitud_editar"
-                                                           , "/Solicitud/Filtro_Comprobante"})
+@WebServlet(name = "Controller_Solicitud", urlPatterns = {"/Solicitud/Solicitud_listar", "/Solicitud/Solicitud_crear", "/Solicitud/Solicitud_mostrar", "/Solicitud/Solicitud_eliminar", "/Solicitud/Solicitud_editar",
+    "/Solicitud/Filtro_Comprobante"})
 public class Controller_Solicitud extends HttpServlet {
 
     /**
@@ -119,8 +119,20 @@ public class Controller_Solicitud extends HttpServlet {
     }
 
     private void mostrarSolicitud(HttpServletRequest request, HttpServletResponse response) {
-        Solicitud solicitud = new Solicitud();
+            Solicitud model = new Solicitud();
+            Solicitud modelConsultar = null;
+            try {
+                modelConsultar = Model.instance().getSolicitud(Integer.parseInt(request.getParameter("ID")));
+                request.setAttribute("model", modelConsultar);
+                request.getRequestDispatcher("/Solicitud/Solicitud_Mostrar.jsp").
+                        forward(request, response);
+            } catch (Exception ex) {
+            }
+        
+    }
 
+    void updateModelId(Solicitud model, HttpServletRequest request) {
+        model.setID(Integer.parseInt(request.getParameter("nombre")));
     }
 
     private void editarSolicitud(HttpServletRequest request, HttpServletResponse response) {
@@ -135,15 +147,15 @@ public class Controller_Solicitud extends HttpServlet {
         } catch (SQLException error) {
             request.setAttribute("mensaje", error.getMessage());
         }
-         request.getRequestDispatcher("/Solicitud/Solicitud_listar").forward(request, response);
+        request.getRequestDispatcher("/Solicitud/Solicitud_listar").forward(request, response);
     }
 
     private void listarSolicitudes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Usuario use=(Usuario) request.getSession().getAttribute("user");
-            Dependencia dep= Model.instance().getDependencia_fromFuncionario(use.getFuncionario().getID());
+            Usuario use = (Usuario) request.getSession().getAttribute("user");
+            Dependencia dep = Model.instance().getDependencia_fromFuncionario(use.getFuncionario().getID());
             request.setAttribute("depe", dep);
-            List<Solicitud> solicitudes=Model.instance().solicitudesPorDependencia(dep);
+            List<Solicitud> solicitudes = Model.instance().solicitudesPorDependencia(dep);
             request.setAttribute("soli", solicitudes);
             request.getRequestDispatcher("/Solicitud/Solicitud_Listado.jsp").forward(request, response);
         } catch (Exception ex) {
