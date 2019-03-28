@@ -127,8 +127,20 @@ public class Controller_Solicitud extends HttpServlet {
     }
 
     private void mostrarSolicitud(HttpServletRequest request, HttpServletResponse response) {
-        Solicitud solicitud = new Solicitud();
+            Solicitud model = new Solicitud();
+            Solicitud modelConsultar = null;
+            try {
+                modelConsultar = Model.instance().getSolicitud(Integer.parseInt(request.getParameter("ID")));
+                request.setAttribute("model", modelConsultar);
+                request.getRequestDispatcher("/Solicitud/Solicitud_Mostrar.jsp").
+                        forward(request, response);
+            } catch (Exception ex) {
+            }
+        
+    }
 
+    void updateModelId(Solicitud model, HttpServletRequest request) {
+        model.setID(Integer.parseInt(request.getParameter("nombre")));
     }
 
     private void editarSolicitud(HttpServletRequest request, HttpServletResponse response) {
