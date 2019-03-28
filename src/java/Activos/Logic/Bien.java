@@ -20,8 +20,15 @@ public class Bien {
     Solicitud solicitud;
 
     public Bien() {
+        this.ID = 0;
+        this.descripcion = "";
+        this.marca = "";
+        this.modelo = "";
+        this.precio = 0;
+        this.cantidad = 0;
+        this.solicitud = new Solicitud();
     }
-
+    
     public Bien(String descripciones, String marca, String modelo, double precio_cu, int cantidad) {
         this.descripcion = descripciones;
         this.marca = marca;

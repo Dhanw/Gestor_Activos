@@ -71,9 +71,11 @@ public class Controller_Login extends HttpServlet {
             Usuario sesion = model.Login(request.getParameter("cuenta"), request.getParameter("password"));
             if (sesion != null) {
                 request.getSession(true).setAttribute("user", sesion);
+                request.getSession(true).setAttribute("estado", "terminado");
                 this.seleccionador(request, response, sesion.getRol());
-            }else
-             request.getRequestDispatcher("/UserLogin/PrepareLogin").forward(request, response);
+            } else {
+                request.getRequestDispatcher("/UserLogin/PrepareLogin").forward(request, response);
+            }
         } catch (Exception ex) {
         }
     }

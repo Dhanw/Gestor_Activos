@@ -40,7 +40,16 @@ public class Solicitud {
     List<Bien> bienes;
 
     public Solicitud() {
-        bienes = new ArrayList<>();
+        this.comprobante = "";
+        java.util.Date uDate = new java.util.Date();
+        this.fecha = new Date(uDate.getTime());
+        this.tipo = 0;
+        this.estado = 1;
+        this.registrador = new Funcionario();
+        this.dependencia = new Dependencia();
+        this.cantidad = 0;
+        this.total = 0;
+        this.bienes = new ArrayList<>();
     }
 
     public Solicitud(String comprobante, Date fecha, int tipo, int estado, Funcionario registrador, Dependencia dependencia, int cantidad, double total, List<Bien> bienes) {

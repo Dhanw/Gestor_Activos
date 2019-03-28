@@ -327,7 +327,6 @@ public class Dao {
         String sql = "select * from Solicitudes where tipo = %d";
         sql = String.format(sql, tipo);
         ResultSet rs = db.executeQuery(sql);
-        Solicitud soli = null;
         while (rs.next()) {
             lista.add(this.getSolicitudH(rs));
         }

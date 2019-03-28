@@ -4,7 +4,10 @@
     Author     : wizzard
 --%>
 
+<%@page import="Activos.Logic.Bien"%>
+<%@page import="Activos.Logic.Solicitud"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%Solicitud solicitud = (Solicitud) session.getAttribute("solicitud") == null ? new Solicitud() : (Solicitud) session.getAttribute("solicitud");%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,68 +19,81 @@
         <%@ include file="/Header.jsp" %>
         <div class="container">
             <center>
-                <h2>Formulario Comprobante</h2>
+                <h2>Formulario Solicitud Bienes</h2>
             </center>
             <br> <br>
-            <form class="form-inline" action="/Registrar_Comprobante">
+            <center>
+                <form class="form-inline" action="Solicitud/Solicitud_guardar">
+                    <div class="form-group">
+                        <label for="Comprobante">Comprobante:</label>
+                        <input type="text" class="form-control" id="comprobante" placeholder="No.Comprobante" name="comprobante" value="<%=solicitud.getComprobante()%>">
+                    </div>
+                    <div class="form-group">
+                        <label for="Fecha">Fecha:</label>
+                        <input type="text" class="form-control" id="fecha" placeholder="2019/01/01" name="fecha" value="<%=solicitud.getFecha().toString()%>">
+                    </div>
+                    <label for="Tipo_Comprobante">Tipo:</label>
+                    <%if (solicitud.getTipo() == 0) {%>
+                    <select class="form-control" id="tipo">
+                        <option selected value="0" >Compra</option>
+                        <option value="1">Donacion</option>
+                    </select>
+                    <%} else {%>
+                    <select class="form-control" id="tipo">
+                        <option value="0">Compra</option>
+                        <option selected value="1">Donacion</option>
+                    </select>
+                    <%}%>
+                    <button type="submit" class="btn btn-default">Guardar</button>
+                </form>
+            </center>
+            <br> <br>
+            <center>
+                <h4>Ingresar un nuevo articulo</h4>
+            </center>
+            <form class="form-inline" action="Solicitud/Solicitud_agregar_bien">
                 <div class="form-group">
-                    <label for="Comprobante">Comprobante:</label>
-                    <input type="text" class="form-control" id="comprobante" placeholder="No.Comprobante" name="comprobante">
+                    <input type="text" class="form-control" id="descripcion" placeholder="Descripcion" name="descripcion" value="">
                 </div>
                 <div class="form-group">
-                    <label for="Fecha">Fecha:</label>
-                    <input type="text" class="form-control" id="fecha" placeholder="01/01/2019" name="fecha">
+                    <input type="text" class="form-control" id="marca" placeholder="Marca" name="marca" value="">
                 </div>
-                <label for="Tipo_Comprobante">Tipo:</label>
-                <select class="form-control" id="tipo">
-                    <option>Compra</option>
-                    <option>Venta</option>
-                </select>
-                <button type="submit" class="btn btn-default">Agregar</button>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="modelo" placeholder="Modelo" name="modelo" value="">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="Precio_Unidad" placeholder="Precio Unidad" name="precio" value="">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="cantidad" placeholder="Cantidad" name="cantidad" value="">
+                </div>
+                <button type="submit" class="btn btn-default">Añadir</button>
             </form>
-            <br> <br> <br>
-            <form class="form-inline" action="/Registrar_Comprobante">
-                <table class="table table-hover">
-                    <thead>
-                        
-                        <tr>
-                            <th>Descripcion</th>
-                            <th>Marca</th>
-                            <th>Modelo</th>
-                            <th>Precio Unitario</th>
-                            <th>Cantidad</th>
-                        </tr>
-                        
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Computadora</td>
-                            <td>Dell</td>
-                            <td>Inspirion5960</td>
-                            <td>500</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>Sillas</td>
-                            <td>ACME</td>
-                            <td>2011</td>
-                            <td>250</td>
-                            <td>10</td>
-                        </tr>
-                        <tr>
-                            <td>Escritorio</td>
-                            <td>Acme</td>
-                            <td>2019</td>
-                            <td>100</td>
-                            <td>10</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <center>
-                    <button type="submit" class="btn btn-default">Agregrar</button>
-                    <button type="submit" class="btn btn-default">Eliminar</button>
-                </center>
-            </form>
+            <br> <br>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Descripcion</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Precio Unitario</th>
+                        <th>Cantidad</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%for (Bien b : solicitud.getBienes()) {%>
+                    <tr>
+                        <td><%=b.getDescripcion()%></td>
+                        <td><%=b.getMarca()%></td>
+                        <td><%=b.getModelo()%></td>
+                        <td><%=b.getPrecio()%></td>
+                        <td><%=b.getCantidad()%></td>
+                        <td><a href="Solicitud/Solicitud_eliminar_bien?ID=<%=b.getID()%>">Eliminar</a></td>
+                    </tr>
+                    <%}%>
+                </tbody>
+            </table>
         </div>
     </body>
 

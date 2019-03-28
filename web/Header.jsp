@@ -14,12 +14,11 @@
             <li class="active"><a href="#">Home</a></li>
                 <%if (user != null) {%>
                 <%if (user.getRol() == Usuario.ADMINISTRADOR_DEPENDENCIA) {%>
-            <li><a href="Solicitud/Solicitud_Listado.jsp">Listado</a></li>
-            <li><a href="Solicitud/Solicitud_Edicion.jsp">Edicion</a></li>
+            <li><a href="Solicitud/Solicitud_listar">Listado</a></li>
+            <li><a href="Solicitud/Solicitud_crear">Edicion</a></li>
         </ul>
         <%}%>
         <ul class="nav navbar-nav navbar-right">
-            <li style="color:#ffffff"><%= user.getFuncionario().getNombre()%> ( <%= user.getDescripcionRol() %> )</li>
             <li><a href="UserLogin/Logout"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
         </ul>
         <%}%>
