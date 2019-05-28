@@ -124,5 +124,46 @@ public class Model {
     public void addSolicitud(Solicitud sol) throws SQLException, Exception {
         dao.addSolicitud(sol);
     }
-
+    
+    public List<Funcionario> getFuncionarios() throws SQLException{
+        return dao.getFuncionarios();
+    }
+    public Puesto getPuestoFromFuncionario(int id) throws SQLException, Exception{
+        return dao.getPuestoFromFuncionario(id);
+    }
+    
+    public List<Funcionario> getFuncionariosFromDependencia(Dependencia depe) throws SQLException{
+        return dao.getFuncionariosFromDependencia(depe);
+    }
+    
+    public Dependencia getDependencia_fromFuncionarioV2(int func) throws Exception{
+        return dao.getDependencia_fromFuncionarioV2(func);
+    }
+    
+    public List<Puesto> getPuestosDisponiblesPorDependencia(Dependencia dep) throws SQLException{
+        return dao.getPuestosDisponiblesPorDependencia(dep);
+    }
+    
+        public List<Puesto> getPuestosDisponibles() throws SQLException, Exception{
+        return dao.getPuestosDisponibles();
+    }
+    
+    public void contratar(Funcionario f, Puesto p) throws SQLException{
+        dao.contratar(f, p);
+    }
+    
+    public Puesto getPuesto(int p) throws Exception{
+        return dao.getPuesto(p);
+    }
+    
+    public void descontratar(Funcionario f, boolean bandera) throws SQLException{
+        dao.descontratar(f, bandera);
+    }
+    
+    public void updateFuncionarioNombre(Funcionario f, String nombre) throws SQLException{
+        dao.updateFuncionarioNombre(f, nombre);
+    }
+    public void updateFuncionarioPuesto(Funcionario f, Puesto p, Puesto o) throws SQLException{
+        dao.updateFuncionarioPuesto(f, p, o);
+    }
 }

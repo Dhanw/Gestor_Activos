@@ -28,6 +28,10 @@ public class Puesto {
         this.dependencia = dependencia;
     }
 
+    public Puesto() {
+        
+    }
+
     public int getID() {
         return ID;
     }

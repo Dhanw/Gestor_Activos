@@ -7,6 +7,7 @@ package Activos.Controllers;
 
 import Activos.Logic.Usuario;
 import static Activos.Logic.Usuario.ADMINISTRADOR_DEPENDENCIA;
+import static Activos.Logic.Usuario.JEFE_RRH;
 import Activos.Models.Model_Login;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -91,6 +92,9 @@ public class Controller_Login extends HttpServlet {
         switch (tipo) {
             case ADMINISTRADOR_DEPENDENCIA:
                 request.getRequestDispatcher("/Solicitud/Solicitud_listar").forward(request, response);
+                break;
+            case JEFE_RRH:
+                request.getRequestDispatcher("/Funcionario/Funcionario_listar").forward(request, response);
                 break;
         }
     }

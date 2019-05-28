@@ -16,8 +16,13 @@
                 <%if (user.getRol() == Usuario.ADMINISTRADOR_DEPENDENCIA) {%>
             <li><a href="Solicitud/Solicitud_listar">Listado</a></li>
             <li><a href="Solicitud/Solicitud_crear">Edicion</a></li>
+                <%}%>
+                <%if (user.getRol() == Usuario.JEFE_RRH) {%>
+            <li><a href="Funcionario/Funcionario_listar">Listado</a></li>
+            <li><a href="Funcionario/Funcionario_Crear">Añadir Funcionario</a></li>
+             <%}%>
         </ul>
-        <%}%>
+                
         <ul class="nav navbar-nav navbar-right">
             <li><a href="UserLogin/Logout"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
         </ul>
